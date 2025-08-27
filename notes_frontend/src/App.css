@@ -1,104 +1,232 @@
-/* CSS Variables for Theme Management */
+/* Modern Light Theme for Notes App */
+/* Brand colors from spec */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --color-primary: #1976d2;
+  --color-secondary: #424242;
+  --color-accent: #ffb300;
+
+  --bg: #ffffff;
+  --bg-muted: #f5f7fb;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 8px 24px rgba(0,0,0,0.06);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  color: var(--text);
+  background: var(--bg);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* App Shell */
+.app {
+  display: grid;
+  grid-template-rows: 56px 1fr;
+  height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+/* Top Bar */
+.topbar {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--color-primary);
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+.brand .dot {
+  width: 10px;
+  height: 10px;
+  background: var(--color-accent);
+  border-radius: 50%;
+}
+
+.search {
+  margin-left: auto;
+  flex: 1;
+  max-width: 560px;
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  outline: none;
+  background: var(--bg);
+  color: var(--text);
+}
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(25,118,210,0.12);
+}
+
+.btn {
+  height: 36px;
+  padding: 0 12px;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.04s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.btn-primary:hover { opacity: 0.95; }
+
+.btn-secondary {
+  background: #e9eef9;
+  color: var(--color-primary);
+}
+.btn-secondary:hover { background: #dce6f7; }
+
+/* Content Area */
+.content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: 0;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+/* Sidebar */
+.sidebar {
+  border-right: 1px solid var(--border);
+  background: var(--bg-muted);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.sidebar-header {
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.list {
+  overflow: auto;
+  padding: 8px;
+}
+
+.note-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.04s ease;
+}
+.note-item:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow);
+}
+.note-item.active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(25,118,210,0.15);
+}
+.note-title {
+  font-weight: 700;
+  color: #111827;
+}
+.note-snippet {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Editor Area */
+.editor {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+}
+
+.title-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  background: transparent;
+}
+
+.editor-body {
+  padding: 12px 16px;
+  min-height: 0;
+}
+
+.textarea {
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 56px - 56px - 24px);
+  resize: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  outline: none;
+  line-height: 1.6;
+  font-size: 14px;
+  color: var(--text);
+  background: #fff;
+}
+.textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(25,118,210,0.12);
+}
+
+/* Utilities */
+.sep {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .sidebar {
+    display: none;
   }
 }
